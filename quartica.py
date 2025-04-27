@@ -15,4 +15,4 @@ def add_no_cache_headers(response):
 
 if __name__ == "__main__":
     create_tables()
-    app.run(debug=True, host='0.0.0.0', port=5000)
+    app.run(debug=True)
