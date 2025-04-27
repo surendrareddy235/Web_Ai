@@ -13,6 +13,11 @@ def add_no_cache_headers(response):
     response.headers['Expires'] = '0'
     return response
 
+# Create the app function to be used by gunicorn
+def create_app():
+    create_tables()  # Ensure your DB setup is called when the app is created
+    return app
+
 if __name__ == "__main__":
-    create_tables()
+    # Only run app in dev mode if this is executed locally
     app.run(debug=True)
