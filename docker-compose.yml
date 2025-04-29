@@ -8,14 +8,14 @@ services:
       MYSQL_ROOT_PASSWORD: ${DB_PASSWORD}
       MYSQL_DATABASE: ${DB_NAME}
     ports:
-      - "3307:3306"  # Host port 3307 maps to container port 3306
+      - "3306:3306"
     volumes:
       - mysql_data:/var/lib/mysql
     networks:
       - mini_gpt_network
 
   mini_gpt_app:
-    build: .
+    image: surendrareddy235/mini_gpt_app  # <-- Azure will use this
     depends_on:
       - db
     container_name: mini_gpt_app
@@ -25,9 +25,8 @@ services:
       DB_USER: ${DB_USER}
       DB_PASSWORD: ${DB_PASSWORD}
       DB_NAME: ${DB_NAME}
-    
     ports:
-      - "5000:5000"  # Host port 5000 maps to container port 5000
+      - "5000:5000"
     networks:
       - mini_gpt_network
 

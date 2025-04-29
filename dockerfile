@@ -12,8 +12,9 @@ RUN pip install --no-cache-dir -r requirements.txt
 COPY . .
 
 #expose to the port 
-EXPOSE 5000
+EXPOSE 7860
 
 #run the flask app
-CMD ["python", "quartica.py"]
+CMD ["gunicorn", "--bind", "0.0.0.0:7860", "quartica.py"]
+
 
