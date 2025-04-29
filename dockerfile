@@ -15,6 +15,6 @@ COPY . .
 EXPOSE 7860
 
 #run the flask app
-CMD ["gunicorn", "--bind", "0.0.0.0:7860", "quartica.app"]
+CMD ["gunicorn", "--bind", "0.0.0.0:7860", "quartica:app"]
 
 
