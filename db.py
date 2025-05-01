@@ -5,7 +5,7 @@ from flask_login import current_user
 from dotenv import load_dotenv
 import os
 
-load_dotenv()
+# load_dotenv()
 
 def get_connection():
     for _ in range(10):  # Try 10 times
