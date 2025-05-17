@@ -1,21 +1,18 @@
-FROM python:3.9-slim
+#official python image
+FROM python:3.13-alpine
 
-# Create non-root user
-RUN useradd -m -u 1000 user
-USER user
-ENV PATH="/home/user/.local/bin:$PATH"
-
+#set working directory
 WORKDIR /app
 
-# Install dependencies
-COPY --chown=user requirements.txt .
+#copy requirements and install
+COPY requirements.txt .
 RUN pip install --no-cache-dir -r requirements.txt
 
-# Copy all project files
-COPY --chown=user . .
+#copy all project files
+COPY . .
 
-# Expose the required port for Hugging Face Space
+#expose to the port 
 EXPOSE 7860
 
-# Start Flask app with Gunicorn
-CMD ["gunicorn", "--bind", "0.0.0.0:7860", "quartica:app"]
+#run the flask app
+CMD ["gunicorn", "--bind", "0.0.0.0:7860", "quartica.py"]

@@ -1,0 +1,38 @@
+version: '3.8'
+
+services:
+  db:
+    image: mysql:8.0
+    container_name: mysql_db
+    environment:
+      MYSQL_ROOT_PASSWORD: ${DB_PASSWORD}
+      MYSQL_DATABASE: ${DB_NAME}
+    ports:
+      - "3306:3306"
+    volumes:
+      - mysql_data:/var/lib/mysql
+    networks:
+      - mini_gpt_network
+
+  mini_gpt_app:
+    image: surendrareddy235/mini_gpt_app  # <-- Azure will use this
+    depends_on:
+      - db
+    container_name: mini_gpt_app
+    environment:
+      OPENAI_API_KEY: ${OPENAI_API_KEY}
+      DB_HOST: db
+      DB_USER: ${DB_USER}
+      DB_PASSWORD: ${DB_PASSWORD}
+      DB_NAME: ${DB_NAME}
+    ports:
+      - "5000:5000"
+    networks:
+      - mini_gpt_network
+
+networks:
+  mini_gpt_network:
+    driver: bridge
+
+volumes:
+  mysql_data:

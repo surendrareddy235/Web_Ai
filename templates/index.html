@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='index.css') }}">
+</head>
+<body>
+    <div class="Mini_GPT">
+        <h2>Mini_GPT</h2>
+        {% if session.get('user_id') %}
+            <div class="user-info">
+                <span>Welcome, {{ session.get('email') }}</span>
+                <a href="{{ url_for('mini_gpt.logout') }}" class="logout-button">Logout</a>
+            </div>
+        {% else %}
+        <div class="both-buttons">
+            <button class="login-button">
+                <a href="{{url_for('mini_gpt.showlogin')}}">login</a>
+            </button>
+            <button class="signup-button">
+                <a href="{{url_for('mini_gpt.showsignup')}}">signup</a>
+            </button>
+        </div>
+        {% endif %}
+    </div>
+
+    <div class="chat-container">
+        <!-- Sidebar -->
+        <div class="chat-sessions">
+            <h3>Chats
+                <form method="GET" action="/newchat" style="display:inline;">
+                    <button type="submit" class="new-chat-btn">✏️new</button>
+                </form>
+            </h3>
+            {% for session in all_sessions %}
+            <div class="chat-session-row">
+                <form method="GET" action="/chat/{{ session.chat_id }}">
+                    <button type="submit" class="chat-id-btn">Chat {{ loop.index }}</button>
+                </form>
+                <form method="POST" action="/delete/{{session.chat_id}}">
+                    <button type="submit" class="delete-btn" onclick="return confirm('delete this chat')">🚮</button>
+                </form>
+            </div>
+            {% endfor %}
+        </div>
+
+        <!-- Chat box -->
+        <div class="chat-box">
+            <div class="both-chats">
+                {% for chat in chat_history %}
+                <div class="user">{{ chat.user }}</div>
+                <div class="gpt"><pre><code>{{ chat.gpt }}</code></pre></div>
+                {% endfor %}
+            </div>
+
+            <form class="chat-input" action="/gemini" method="POST" enctype="multipart/form-data">
+                <input type ="file" id="file-upload" name="file" class="file-upload">
+                <label for ="file-upload" class="plus-button">➕</label>
+                <input type="text" name="questionbox" placeholder="Type your question here..." required>
+                <button type="submit">➤</button>
+            </form>
+        </div>
+    </div>
+</body>
+</html>

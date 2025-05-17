@@ -1,0 +1,17 @@
+<html>
+    <head>
+        <link rel="stylesheet" type="text/css" href="{{url_for('static', filename='signup.css')}}">
+    </head>
+    <body>
+        <h1>welcome to Mini_GPT please signup</h1>
+        <form class="signup" action="/signupform" method="POST">
+            email:<input class="email" type="email" name="email" required><br>
+            password:<input class="password" type="password" name="password" required><br>
+            <input class="signup-button" type="submit" value="signup"></input>
+        </form>
+        <h3>IF YOU ARE ALREADY SIGNED UP PLEASE 
+            <a href="/login" class="btn-link">Login</a>
+          </h3>
+          <p>{{ message }}</p>
+    </body>
+</html>
